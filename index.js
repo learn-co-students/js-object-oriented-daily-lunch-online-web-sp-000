@@ -31,6 +31,8 @@ class Neighborhood {
   
 }
 
+//comment
+
 class Customer {
   constructor(name, neighborhoodId) {
     this.name = name;
