@@ -12,20 +12,25 @@ class Neighborhood {
     this.name = name;
     store.neighborhoods.push(this)
   }
-  deliveries(){
-    let arr = store.deliveries.filter(
-      function(delivery) {
-        return delivery.neighborhoodId === this.id;
-      })
-       return arr;
- }
+  // deliveries(){
+  //   return store.deliveries.filter(
+  //     function(delivery) {
+  //       delivery.neighborhoodId === this.id;
+  //     })
+  // }
+  deliveries() {
+      return store.deliveries.filter(delivery => delivery.neighborhoodId === this.id);
+   } 
 
    customers(){
-
-   }
-  // sayHello() {
-  //   console.log(`Hello, my name is ${this.name}`);
-  // }
+     return store.customers.filter(customer => customer.neighborhoodId === this.id);
+    }
+    meals(){
+      let mealArr = this.deliveries().map(function(delivery){
+        return delivery.meal();
+      });
+      return [...new Set(mealArr)];
+    }
 }
 
 class Meal{
@@ -42,17 +47,40 @@ class Meal{
         }.bind(this)
     );
   }
-
+   meals(){
+     return this.deliveries().map(function(delivery){
+       return delivery.meal();
+     });
+   }
+   customers(){
+     return this.deliveries().map(function(delivery){
+       return delivery.customer();
+     });
+   }
+    static byPrice(){
+      return store.meals.sort(function(a, b){
+        return b.price - a.price;
+      });
+   }
 }
 
 class Delivery{
-  constructor(meal, customer, neighborhood){
+  constructor(meal, neighborhood, customer){
     this.id = ++deliveryId;
     this.mealId = meal;
     this.customerId = customer;
     this.neighborhoodId = neighborhood;
     store.deliveries.push(this)
   }
+
+ // constructor(mealId, neighborhoodId, customerId) {
+ //    this.id = ++deliveryId;
+ //    this.mealId = mealId;
+ //    this.neighborhoodId = neighborhoodId;
+ //    this.customerId = customerId;
+ //    store.deliveries.push(this);
+ //  } 
+
   meal(){
     return store.meals.find(
          function(meal) {
@@ -66,6 +94,10 @@ class Delivery{
              return customer.id === this.customerId;
          }.bind(this)
      );
+  }
+  neighborhood(){
+    return store.neighborhoods.find(neighborhood => neighborhood.id === this.neighorhoodId);
+
   }
 }
 
@@ -88,5 +120,10 @@ class Customer{
        return delivery.meal();
      });
   }
-
+  totalSpent() {
+    var total = this.meals().reduce(function(tot, mealObj) {
+      return tot + mealObj.price;
+   },0);
+      return total;
+  }
 }
