@@ -172,11 +172,11 @@ describe('index.js', () => {
           expect(guysAmericanDelivery.customer()).to.equal(guy);
         });
       });
-      describe('neighborhood()', () => {
-        it('returns the neighborhood in which a delivery was placed', () => {
-          expect(guysAmericanDelivery.neighborhood()).to.equal(redHook);
-        });
-      });
+      // // describe('neighborhood()', () => {
+      // //   it('returns the neighborhood in which a delivery was placed', () => {
+      // //     expect(guysAmericanDelivery.neighborhood()).to.equal(redHook);
+      // //   });
+      // });
     });
 
     describe('Customer', () => {
