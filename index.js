@@ -13,12 +13,15 @@ class Neighborhood {
     store.neighborhoods.push(this)
   }
   deliveries(){
-    return store.deliveries.filter(
+    let arr = store.deliveries.filter(
         function(delivery) {
             return delivery.neighborhoodId === this.id;
         }.bind(this)
     );
-  }
+      arr.filter((item, index) => {
+    return arr.indexOf(item) === index
+  });
+ }
 
    customers(){
 
@@ -35,7 +38,13 @@ class Meal{
     this.price = price;
     store.meals.push(this)
   }
-
+  deliveries(){
+    return store.deliveries.filter(
+        function(delivery) {
+            return delivery.mealId === this.id;
+        }.bind(this)
+    );
+  }
 
 }
 
@@ -70,6 +79,17 @@ class Customer{
     this.name = name;
     store.customers.push(this)
   }
-
+  deliveries(){
+    return store.deliveries.filter(
+        function(delivery) {
+            return delivery.customerId === this.id;
+        }.bind(this)
+    );
+  }
+  meals(){
+     return this.deliveries().map(function(delivery){
+       return delivery.meal();
+     });
+  }
 
 }
