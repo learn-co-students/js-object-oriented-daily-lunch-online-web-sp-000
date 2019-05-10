@@ -14,13 +14,10 @@ class Neighborhood {
   }
   deliveries(){
     let arr = store.deliveries.filter(
-        function(delivery) {
-            return delivery.neighborhoodId === this.id;
-        }.bind(this)
-    );
-      arr.filter((item, index) => {
-    return arr.indexOf(item) === index
-  });
+      function(delivery) {
+        return delivery.neighborhoodId === this.id;
+      })
+       return arr;
  }
 
    customers(){
