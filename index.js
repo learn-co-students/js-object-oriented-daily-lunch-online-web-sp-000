@@ -21,11 +21,22 @@ class Neighborhood {
   };
 
   customers() {
-    return deliveries.reduce(function(arr, d){
-      arr.push d.customer();
+    return this.deliveries().reduce(function(arr, d){
+      if (!arr.includes(d.customer())) {
+        arr.push(d.customer());
+      }
       return arr;
-    }, [])
-  }
+    }, []);
+  };
+
+  meals() {
+    return this.deliveries().reduce(function(arr, d){
+      if (!arr.includes(d.meal())) {
+        arr.push(d.meal());
+      }
+      return arr;
+    }, []);
+  };
 }
 
 class Meal {
@@ -36,6 +47,27 @@ class Meal {
 
     store.meals.push(this);
   };
+
+  deliveries() {
+    return store.deliveries.filter(function(d){
+      return d.mealId == this.id;
+    }.bind(this));
+  };
+
+  customers() {
+    return this.deliveries().reduce(function(arr, d){
+      if (!arr.includes(d.customer())) {
+        arr.push(d.customer());
+      }
+      return arr;
+    }, []);
+  };
+
+  static byPrice(){
+    return store.meals.slice().sort(function(a, b) {
+      return b.price - a.price;
+    })
+  }
 }
 
 class Customer {
@@ -46,6 +78,25 @@ class Customer {
 
     store.customers.push(this);
   };
+
+  deliveries() {
+    return store.deliveries.filter(function(d){
+      return d.customerId == this.id;
+    }.bind(this));
+  };
+
+  meals() {
+    return this.deliveries().reduce(function(arr, d){
+      arr.push(d.meal());
+      return arr;
+    }, []);
+  };
+
+  totalSpent() {
+    return this.meals().reduce(function(sum, meal) {
+      return sum + meal.price;
+    }, 0);
+  }
 }
 
 class Delivery {
