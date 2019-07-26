@@ -28,7 +28,12 @@ class Neighborhood {
     }
 
     meals() {
+        const array = this.deliveries().map(function(del) {
+            return del.meal();
+        }.bind(this))
 
+        const distinctMeals = [...new Set(array.map(x => x.title))];
+        return distinctMeals;
     }
 }
 
@@ -91,8 +96,9 @@ class Customer {
 class Meal {
     static byPrice() {
         return store.meals.sort(function(a,b) {
-            return a.price - b.price;
+            return b.price - a.price;
         })
+        // return store.meals.sort((a,b) => (a.price < b.price) ? 1: -1)
     }
 
     constructor(title, price) {
