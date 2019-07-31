@@ -82,7 +82,7 @@ class Meal {
   };
   //a class method that orders all meal instances by their price in descending order. Use the static keyword to write a class method.
   static byPrice() {
-    return store.meals.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+    return store.meals.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
   };
 };
 
