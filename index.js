@@ -168,19 +168,15 @@ class Neighborhood {
   
   customers() {
     let x = this.deliveries().map(function(delivery) {
-      return delivery.customerId;
+      return delivery.customerId})
       
-      // return store.customers.filter(function(customer) {
-      //   customer.id ===  
-      // })
-      
-    });
-    console.log(x);
-    //array1.forEach(element => console.log(element))
-    return x.forEach (customerId =>
-      store.customers.find(customer =>
-        customer.id === customerId
-    ))
+      return store.customers.filter(function(customer) {
+        return x.includes(customer.id)  
+      })
+  }
+  
+  meals() {
+    
   }
   
 }
@@ -206,6 +202,25 @@ class Customer {
   store.customers.push(this);
   }
   
+  
+  deliveries() {
+    return store.deliveries.filter(delivery => delivery.customerId === this.id);
+  }
+  
+  
+  meals() {
+    let x = this.deliveries().map(delivery => delivery.mealId);
+    // return store.meals.filter(meal => x.includes(meal.id) );
+    console.log(x);
+    return x.forEach(mealId => function() {
+      return store.meals.filter(meal => meal.id === mealId)
+    }) 
+  }
+  
+  
+  totalSpent() {
+    
+  }
 }
 
 
